@@ -1,9 +1,4 @@
-import React, {
-  createContext,
-  useCallback,
-  useEffect,
-  useReducer,
-} from "react";
+import React, { createContext, useEffect, useReducer } from "react";
 import { useComponentDidMount, useLocalStorage } from "./hooks";
 
 const MoviesReducer = (state: any, action: any) => {
@@ -64,25 +59,31 @@ const MoviesReducer = (state: any, action: any) => {
 
     case "reset":
       return { ...state, tagAdded: undefined, tagRemoved: undefined };
+
+    default:
+      return state;
   }
 };
 
 export const MoviesContext = createContext({} as any);
 export const MoviesProvider = ({ children }: { children: React.ReactNode }) => {
-  const [state, dispatch] = useReducer(MoviesReducer, { movies: [] });
+  const [{ movies, tagAdded, tagRemoved }, dispatch] = useReducer(
+    MoviesReducer,
+    { movies: [], tagAdded: undefined, tagRemoved: undefined }
+  );
   const [localStorageMovies, setLocalStorageMovies] = useLocalStorage(
     "movies",
     ""
   );
 
   useEffect(() => {
-    if (state.movies && (state.tagAdded || state.tagRemoved)) {
+    if (movies && (tagAdded || tagRemoved)) {
       dispatch({
         type: "reset",
       });
-      setLocalStorageMovies(state.movies);
+      setLocalStorageMovies(movies);
     }
-  }, [state.movies, setLocalStorageMovies, state.tagAdded, state.tagRemoved]);
+  }, [movies, setLocalStorageMovies, tagAdded, tagRemoved]);
 
   useComponentDidMount(() => {
     if (!localStorageMovies) {
@@ -91,7 +92,7 @@ export const MoviesProvider = ({ children }: { children: React.ReactNode }) => {
         .then((movies) => {
           dispatch({
             type: "add_movies",
-            movies,
+            movies: movies.splice(1, 1),
           });
           setLocalStorageMovies(movies);
         });
@@ -111,13 +112,13 @@ export const MoviesProvider = ({ children }: { children: React.ReactNode }) => {
     });
   };
 
-  const removeTag = useCallback((movieId: number, id: number) => {
+  const removeTag = (movieId: number, id: number) => {
     dispatch({
       type: "remove_tag",
       movieId,
       id,
     });
-  }, []);
+  };
 
   const search = (search: string) => {
     dispatch({
@@ -128,9 +129,7 @@ export const MoviesProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   return (
-    <MoviesContext.Provider
-      value={{ movies: state.movies, addTag, removeTag, search }}
-    >
+    <MoviesContext.Provider value={{ movies, addTag, removeTag, search }}>
       {children}
     </MoviesContext.Provider>
   );
