@@ -92,7 +92,7 @@ export const MoviesProvider = ({ children }: { children: React.ReactNode }) => {
         .then((movies) => {
           dispatch({
             type: "add_movies",
-            movies: movies.splice(1, 1),
+            movies,
           });
           setLocalStorageMovies(movies);
         });
