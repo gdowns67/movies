@@ -7,6 +7,7 @@ const Search = () => {
 
   return (
     <div
+      className="search"
       style={{
         paddingTop: "10px",
         paddingRight: "10px",
@@ -14,12 +15,14 @@ const Search = () => {
         justifyContent: "flex-end",
       }}
     >
-      <input
-        onChange={(event: any) => search(event.target.value)}
-        type="text"
-        placeholder="Search tags"
-        className="Tag-Name-Search-Input"
-      />
+      <div className="inputWithIcon">
+        <input
+          onChange={(event: any) => search(event.target.value)}
+          type="text"
+          placeholder="Search tags"
+        />
+        <i className="fa fa-search fa-lg fa-fw" aria-hidden="true"></i>
+      </div>
     </div>
   );
 };
@@ -30,7 +33,7 @@ const Movies = () => {
   return (
     <div style={{ display: "flex", flexDirection: "column", height: "100%" }}>
       <Search />
-      <div className="Movies">
+      <div className="movies">
         {movies &&
           movies.map((m: any, index: number) => {
             return <Movie key={index} movie={m} />;
@@ -45,7 +48,7 @@ const Movie = ({ movie }: { movie: any }) => {
   const [newTagValue, setNewTagValue] = useState();
 
   return (
-    <div className="Movie">
+    <div className="movie">
       <div style={{ display: "flex", flexDirection: "column" }}>
         <span>{movie.name}</span>
         <span style={{ marginTop: "4px" }}>
@@ -66,13 +69,13 @@ const Movie = ({ movie }: { movie: any }) => {
           type="text"
           onChange={(event: any) => setNewTagValue(event.target.value)}
           placeholder="New tag name"
-          className="Tag-Name-Input"
+          className="tag-name-input"
         />
         <button
           onClick={() => {
             newTagValue && addTag(movie.id, newTagValue);
           }}
-          className="Add-Tag"
+          className="add-tag"
         >
           Add Tag
         </button>
@@ -85,7 +88,7 @@ const Tag = ({ id, tag }: { id: number; tag: any }) => {
   const { removeTag } = useContext(MoviesContext);
 
   return (
-    <button onClick={() => removeTag(id, tag.id)} className="Tag">
+    <button onClick={() => removeTag(id, tag.id)} className="tag">
       <span style={{ marginRight: "4px" }}>{tag.value}</span>
       <i className="fa fa-close"></i>
     </button>

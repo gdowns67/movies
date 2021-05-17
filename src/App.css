@@ -1,5 +1,5 @@
-.Add-Tag,
-.Tag {
+.add-tag,
+.tag {
   background-color: #555555;
   border: none;
   color: white;
@@ -13,7 +13,7 @@
   cursor: pointer;
 }
 
-.Tag {
+.tag {
   color: white;
   cursor: pointer;
   background-color: #1bb4e6;
@@ -21,12 +21,12 @@
   border-radius: 10px;
 }
 
-.Tag-Name-Search-Input {
+.tag-name-search-input {
   border-radius: 10px;
   height: 24px;
 }
 
-.Tag-Name-Input {
+.tag-name-input {
   margin-right: 10px;
   position: relative;
   border: 2px solid #cdcdcd;
@@ -43,17 +43,17 @@
   bottom: 0;
   left: 0;
   right: 0;
-  background: #f3eeee;
+  background: #c0c0c0;
   border-radius: 12px;
 }
 
-.Movies {
+.movies {
   margin-top: 10px;
   margin-bottom: 10px;
   overflow-y: scroll;
 }
 
-.Movie {
+.movie {
   border-radius: 12px;
   background-color: #dcdcdc;
   font-size: 0.9em;
@@ -75,4 +75,41 @@
 html,
 body {
   height: 100%;
+}
+
+.search input[type="text"] {
+  width: 100%;
+  border: 2px solid #aaa;
+  border-radius: 4px;
+  margin: 8px 0;
+  outline: none;
+  padding: 8px;
+  box-sizing: border-box;
+  transition: 0.3s;
+}
+
+.search input[type="text"]:focus {
+  border-color: dodgerBlue;
+  box-shadow: 0 0 8px 0 dodgerBlue;
+}
+
+.search .inputWithIcon input[type="text"] {
+  padding-left: 40px;
+}
+
+.search .inputWithIcon {
+  position: relative;
+}
+
+.search .inputWithIcon i {
+  position: absolute;
+  left: 0;
+  top: 8px;
+  padding: 9px 8px;
+  color: #aaa;
+  transition: 0.3s;
+}
+
+.search .inputWithIcon input[type="text"]:focus + i {
+  color: dodgerBlue;
 }
